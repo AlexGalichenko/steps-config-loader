@@ -1,6 +1,12 @@
-const { Before, After } = require('@cucumber/cucumber');
+const { Before, After, defineParameterType} = require('@cucumber/cucumber');
 const path = require('path');
 const memory = require('@cucumber-e2e/memory2');
+
+defineParameterType({
+    name: 'memory',
+    regexp: /'(.+)'/,
+    transformer: p => memory.getValue(p)
+});
 
 Before(function () {
     const configPath = process.env.CONFIG;
